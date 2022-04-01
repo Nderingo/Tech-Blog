@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({ helpers });
+// const hbs = exphbs.create({ helpers });
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 3001;
 
 const sess = {
   secret: 'Super secret secret',
-  cookie: {},
+  cookie: {
+    maxAge: 86400,
+    httpOnly: true,
+    secure: false,
+    sameSite: true,
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
